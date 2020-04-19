@@ -1,0 +1,341 @@
+{
+	"info": {
+		"_postman_id": "3938cfb5-33ea-42fc-9180-197865c36301",
+		"name": "students",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AddClass",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"class_name\":\"Algebra\",\n\t\"class_description\":\"Description For Algebra\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/class",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"class"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddClass Batch",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n\t\"class_name\":\"Biology\",\n\t\"class_description\":\"Description For Biology\"\n},\n{\n\t\"class_name\":\"History\",\n\t\"class_description\":\"Description For History\"\n},\n{\n\t\"class_name\":\"Algebra\",\n\t\"class_description\":\"Description For Algebra\"\n}\n]"
+				},
+				"url": {
+					"raw": "http://localhost:8080/class/batch",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"class",
+						"batch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Class",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n        \"class_id\": 2,\n        \"class_name\": \"Biology\",\n        \"class_description\": \"Description For Biology\"\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/class",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"class"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Classes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/class",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"class"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Class By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/class/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"class",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Class",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/class/History",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"class",
+						"History"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EnrollStudent",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"first_name\": \"John\",\n\t\"last_name\": \"Doe\",\n\t\"email_addresses\": [{\n\t\t\t\"email_address\": \"john.doe@college.com\",\n\t\t\t\"email_type\": \"academic\"\n\t\t},\n\t\t{\n\t\t\t\"email_address\": \"john.doe@gmail.com\",\n\t\t\t\"email_type\": \"personal\"\n\t\t}\n\t],\n\t\"classes\": [{\n\t\t\t\"class_name\": \"Biology\"\n\t\t},\n\t\t{\n\t\t\t\"class_name\": \"History\"\n\t\t}\n\t]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/student",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"student"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Students",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"first_name\":\"Jane\",\n\t\"last_name\":\"Doe\",\n\t\"email_addresses\" :[],\n\t\"classes_enrolled\":[{\n\t\t\"class_name\":\"Biology\"\n\t},\n\t{\n\t\t\"class_name\":\"History\"\n\t}\n\t\t]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/student",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"student"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Student By Id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"first_name\":\"Jane\",\n\t\"last_name\":\"Doe\",\n\t\"email_addresses\" :[],\n\t\"classes_enrolled\":[{\n\t\t\"class_name\":\"Biology\"\n\t},\n\t{\n\t\t\"class_name\":\"History\"\n\t}\n\t\t]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/student/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"student",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Enroll Into Course",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"student_id\":2,\n\t\"classes\":[{\n\t\t\"class_name\":\"Algebra\"\n\t}\n\t\t]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/student?action=enroll",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"student"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "enroll"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unenroll Course",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"student_id\":2,\n\t\"classes\":[{\n\t\t\"class_name\":\"History\"\n\t}\n\t\t]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/student?action=unenroll",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"student"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "unenroll"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Student",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/student/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"student",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
