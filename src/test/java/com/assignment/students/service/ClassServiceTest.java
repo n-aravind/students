@@ -12,6 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+// GP research TDD and the do it
 class ClassServiceTest {
 
     private ClassRepository classRepository = mock(ClassRepository.class);
@@ -19,6 +20,8 @@ class ClassServiceTest {
 
     @Test
     void addClass() {
+        // GP mock the repostory to return the id of the thing created
+        // Mockito.when(classRepository.save((Class) notNull())).thenReturn(1);
         Class subject = Class.builder().classId(1).className("Biology").classDescription("Test Description").build();
         classService.addClass(subject);
         ArgumentCaptor<Class> classArgumentCaptor = ArgumentCaptor.forClass(Class.class);
@@ -64,6 +67,8 @@ class ClassServiceTest {
         classService.deleteClass("Algebra");
         verify(classRepository,times(1)).deleteClass("Algebra");
     }
+
+    // GP test the DataIntegrityViolationException thrown by the repository
 
     @Test
     void addClasses() {

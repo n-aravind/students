@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 
+// GP @Transactional should be in the service not the repository
 @Repository
 public class StudentRepository {
 
@@ -30,6 +31,10 @@ public class StudentRepository {
         params.addValue("last_name",student.getLastName());
         namedParameterJdbcTemplate.update(sql,params);
 
+        // GP if no email addresses and no classes do not need to query for student id.
+
+        // GP do not query for id. We are going to get back the PK in a different way.
+        // https://github.com/gpratte/texastoc-v2-spring-boot/tree/master/application/src/main/java/com/texastoc/repository
         sql = "SELECT * from student where first_name = :first_name and last_name = :last_name";
 
         long student_id = Objects.requireNonNull(namedParameterJdbcTemplate.queryForObject(sql, params, BeanPropertyRowMapper.newInstance(Student.class))).getStudentId();
@@ -49,6 +54,7 @@ public class StudentRepository {
     }
 
     private void updateClassesEnrolled(Class subject, long student_id) {
+        // GP class should have the ID
         String sql = "SELECT * FROM class where class_name = :class_name";
         long class_id = Objects.requireNonNull(namedParameterJdbcTemplate.queryForObject(sql, new MapSqlParameterSource("class_name", subject.getClassName()), BeanPropertyRowMapper.newInstance(Class.class))).getClassId();
 
@@ -73,18 +79,22 @@ public class StudentRepository {
         return namedParameterJdbcTemplate.query(sql,new MapSqlParameterSource(),BeanPropertyRowMapper.newInstance(Student.class));
     }
 
+    // GP maybe make it easier
+    //public void enrollStudent(long studentId, long classId) {
     public void enrollStudent(Student student) {
         for (Class subject : student.getClasses()){
             updateClassesEnrolled(subject,student.getStudentId());
         }
     }
 
+    // GP ditto
     public void unEnrollStudent(Student student) {
         for(Class subject : student.getClasses()){
             unEnrollStudentFromClass(subject,student.getStudentId());
         }
     }
 
+    // GP just work with ids (no query)
     private void unEnrollStudentFromClass(Class subject, long studentId) {
         String sql = "SELECT * FROM class where class_name = :class_name";
         long class_id = Objects.requireNonNull(namedParameterJdbcTemplate.queryForObject(sql, new MapSqlParameterSource("class_name", subject.getClassName()), BeanPropertyRowMapper.newInstance(Class.class))).getClassId();
@@ -102,6 +112,7 @@ public class StudentRepository {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource("student_id",id);
         String sql = "DELETE FROM class_student where student_id = :student_id";
         namedParameterJdbcTemplate.update(sql,mapSqlParameterSource);
+        // GP read database cascade delete (but we are not doing a cascade delete so this is fine)
         sql = "DELETE FROM email_addresses where student_id = :student_id";
         namedParameterJdbcTemplate.update(sql,mapSqlParameterSource);
         sql = "DELETE FROM student where student_id = :student_id";

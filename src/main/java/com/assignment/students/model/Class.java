@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.Column;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -23,4 +24,7 @@ public class Class {
     @JsonProperty("class_description")
     @Column(name = "class_description")
     private String classDescription;
+
+    // GP not sure yet if this is what we want to do
+    private List<Student> students;
 }

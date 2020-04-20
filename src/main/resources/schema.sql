@@ -33,4 +33,5 @@ student_id INT NOT NULL,
 class_id VARCHAR(250) NOT NULL,
 FOREIGN KEY (student_id) REFERENCES student(student_id),
 FOREIGN KEY (class_id) REFERENCES class(class_id)
+# GP unique student/class
 );

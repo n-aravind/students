@@ -2,6 +2,7 @@ package com.assignment.students.service;
 
 import com.assignment.students.model.Class;
 import com.assignment.students.repository.ClassRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

@@ -29,9 +29,12 @@ public class StudentController {
 
     @PatchMapping(path = "student")
     public void enrollStudent(@RequestBody Student student, @RequestParam String action){
+        // GP instead of action use content-type
         if(action.equalsIgnoreCase("enroll")){
+            // 'Content-Type': 'application/vnd.aravind.enroll+json'
             studentService.enrollStudent(student);
         }else if(action.equalsIgnoreCase("unenroll")){
+            // 'Content-Type': 'application/vnd.aravind.unenroll+json'
             studentService.unEnrollStudent(student);
         }else{
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Action Not Supported");
