@@ -17,37 +17,33 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @PostMapping(path = "student")
-    public void addStudent(@RequestBody Student student){
-        studentService.addStudent(student);
+    @PostMapping(path = "api/v1/students")
+    public Student addStudent(@RequestBody Student student) {
+        return studentService.addStudent(student);
     }
 
-    @GetMapping(path = "student")
-    public List<Student> getAllStudents(){
+    @GetMapping(path = "api/v1/students")
+    public List<Student> getAllStudents() {
         return studentService.getAllStudents();
     }
 
-    @PatchMapping(path = "student")
-    public void enrollStudent(@RequestBody Student student, @RequestParam String action){
-        // GP instead of action use content-type
-        if(action.equalsIgnoreCase("enroll")){
-            // 'Content-Type': 'application/vnd.aravind.enroll+json'
-            studentService.enrollStudent(student);
-        }else if(action.equalsIgnoreCase("unenroll")){
-            // 'Content-Type': 'application/vnd.aravind.unenroll+json'
-            studentService.unEnrollStudent(student);
-        }else{
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Action Not Supported");
-        }
+    @PatchMapping(path = "api/v1/students", consumes = "application/vnd.aravind.enroll+json")
+    public Student enrollStudent(@RequestBody Student student) {
+        return studentService.enrollStudent(student);
     }
 
-    @DeleteMapping(path = "student/{id}")
-    public void deleteStudent(@PathVariable String id){
+    @PatchMapping(path = "api/v1/students", consumes = "application/vnd.aravind.unenroll+json")
+    public Student unEnrollStudent(@RequestBody Student student) {
+        return studentService.unEnrollStudent(student);
+    }
+
+    @DeleteMapping(path = "api/v1/students/{id}")
+    public void deleteStudent(@PathVariable String id) {
         studentService.deleteStudent(id);
     }
 
-    @GetMapping(path = "student/{id}")
-    public Student getStudentById(@PathVariable long id){
+    @GetMapping(path = "api/v1/students/{id}")
+    public Student getStudentById(@PathVariable long id) {
         return studentService.getStudentById(id);
     }
 }

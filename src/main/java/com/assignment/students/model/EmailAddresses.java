@@ -29,8 +29,7 @@ public class EmailAddresses {
     @Column(name = "email_address")
     private String emailAddress;
 
-    // GP make EmailType an enum
     @JsonProperty("email_type")
     @Column(name = "email_type")
-    private String emailType;
+    private EmailType emailType;
 }

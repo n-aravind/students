@@ -2,14 +2,16 @@ package com.assignment.students.service;
 
 import com.assignment.students.model.Class;
 import com.assignment.students.repository.ClassRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 // GP research TDD and the do it
@@ -20,14 +22,14 @@ class ClassServiceTest {
 
     @Test
     void addClass() {
-        // GP mock the repostory to return the id of the thing created
-        // Mockito.when(classRepository.save((Class) notNull())).thenReturn(1);
         Class subject = Class.builder().classId(1).className("Biology").classDescription("Test Description").build();
         classService.addClass(subject);
+        Mockito.when(classRepository.addClass(notNull())).thenReturn(1L);
         ArgumentCaptor<Class> classArgumentCaptor = ArgumentCaptor.forClass(Class.class);
         verify(classRepository,times(1)).addClass(subject);
         verify(classRepository).addClass(classArgumentCaptor.capture());
         assertEquals("Biology",classArgumentCaptor.getValue().getClassName());
+        assertEquals(1,classRepository.addClass(subject));
     }
 
     @Test
@@ -64,11 +66,17 @@ class ClassServiceTest {
 
     @Test
     void deleteClass() {
-        classService.deleteClass("Algebra");
-        verify(classRepository,times(1)).deleteClass("Algebra");
+        classService.deleteClass(1);
+        verify(classRepository,times(1)).deleteClass(1);
     }
 
-    // GP test the DataIntegrityViolationException thrown by the repository
+    @Test
+    public void dataIntegrityViolationException(){
+        doThrow(DataIntegrityViolationException.class)
+                .when(classRepository)
+                .addClass(Class.builder().build());
+        Assertions.assertThrows(DataIntegrityViolationException.class,() -> classService.addClass(Class.builder().build()));
+    }
 
     @Test
     void addClasses() {

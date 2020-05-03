@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Class {
 
     @JsonProperty("class_id")
@@ -25,6 +26,4 @@ public class Class {
     @Column(name = "class_description")
     private String classDescription;
 
-    // GP not sure yet if this is what we want to do
-    private List<Student> students;
 }
