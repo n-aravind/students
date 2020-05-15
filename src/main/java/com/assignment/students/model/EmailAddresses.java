@@ -31,5 +31,5 @@ public class EmailAddresses {
 
     @JsonProperty("email_type")
     @Column(name = "email_type")
-    private String emailType;
+    private EmailType emailType;
 }

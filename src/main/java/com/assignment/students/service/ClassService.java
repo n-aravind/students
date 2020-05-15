@@ -15,8 +15,10 @@ public class ClassService {
         this.classRepository = classRepository;
     }
 
-    public void addClass(Class subject) {
-        classRepository.addClass(subject);
+    public Class addClass(Class subject) {
+        long id = classRepository.addClass(subject);
+        subject.setClassId(id);
+        return subject;
     }
 
     public List<Class> getAllClasses() {
@@ -27,18 +29,22 @@ public class ClassService {
         return classRepository.getClassById(id);
     }
 
-    public void updateClass(Class subject) {
-        classRepository.updateClass(subject);
+    public Class updateClass(Class subject) {
+        long id = classRepository.updateClass(subject);
+        subject.setClassId(id);
+        return subject;
     }
 
-    public void deleteClass(String name) {
-        classRepository.deleteClass(name);
+    public void deleteClass(long id) {
+        classRepository.deleteClass(id);
     }
 
     @Transactional
-    public void addClasses(List<Class> subjectList) {
-        for(Class subject : subjectList){
-            classRepository.addClass(subject);
+    public List<Class> addClasses(List<Class> subjectList) {
+        for (Class subject : subjectList) {
+            long id = classRepository.addClass(subject);
+            subject.setClassId(id);
         }
+        return subjectList;
     }
 }
