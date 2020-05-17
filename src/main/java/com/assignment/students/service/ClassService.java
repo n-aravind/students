@@ -29,8 +29,9 @@ public class ClassService {
         return classRepository.getClassById(id);
     }
 
-    public Class updateClass(Class subject) {
-        long id = classRepository.updateClass(subject);
+    @Transactional
+    public Class updateClass(long id,Class subject) {
+        classRepository.updateClass(id, subject);
         subject.setClassId(id);
         return subject;
     }

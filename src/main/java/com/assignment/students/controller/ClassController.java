@@ -36,9 +36,9 @@ public class ClassController {
         return classService.getClassById(id);
     }
 
-    @PutMapping(path = "/api/v1/classes")
-    public Class updateClass(@RequestBody Class subject) {
-        return classService.updateClass(subject);
+    @PutMapping(path = "/api/v1/classes/{id}")
+    public Class updateClass(@PathVariable long id, @RequestBody Class subject) {
+        return classService.updateClass(id, subject);
     }
 
     @DeleteMapping(path = "/api/v1/classes/{id}")

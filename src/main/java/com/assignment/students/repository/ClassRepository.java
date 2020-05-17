@@ -1,7 +1,6 @@
 package com.assignment.students.repository;
 
 import com.assignment.students.model.Class;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -44,21 +43,13 @@ public class ClassRepository {
         return namedParameterJdbcTemplate.queryForObject(sql, param, BeanPropertyRowMapper.newInstance(Class.class));
     }
 
-    public long updateClass(Class subject) {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        String[] keys = {"class_id"};
-        String sql = "Update Class Set class_description = :class_description where class_name = :class_name";
+    public void updateClass(long id, Class subject) {
+        String sql = "Update Class Set class_name = :class_name, class_description = :class_description where class_id = :class_id";
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("class_name", subject.getClassName())
-                .addValue("class_description", subject.getClassDescription());
-        namedParameterJdbcTemplate.update(sql, params, keyHolder, keys);
-        long id;
-        try {
-            id = keyHolder.getKey().longValue();
-        } catch (NullPointerException e) {
-            throw new EmptyResultDataAccessException(0);
-        }
-        return id;
+                .addValue("class_description", subject.getClassDescription())
+                .addValue("class_id", id);
+        namedParameterJdbcTemplate.update(sql, params);
     }
 
     public void deleteClass(long id) {

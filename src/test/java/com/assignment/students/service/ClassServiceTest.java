@@ -54,14 +54,11 @@ class ClassServiceTest {
 
     @Test
     void updateClass() {
-        Class subject = Class.builder().className("Algebra").classDescription("Test Description").build();
+        Class subject = Class.builder().classId(1).className("Algebra").classDescription("Test Description").build();
         classService.addClass(subject);
         subject.setClassDescription("Changed Description");
-        classService.updateClass(subject);
-        ArgumentCaptor<Class> classArgumentCaptor = ArgumentCaptor.forClass(Class.class);
-        verify(classRepository,times(1)).updateClass(subject);
-        verify(classRepository).updateClass(classArgumentCaptor.capture());
-        assertEquals("Changed Description",classArgumentCaptor.getValue().getClassDescription());
+        classService.updateClass(1,subject);
+        verify(classRepository,times(1)).updateClass(1,subject);
     }
 
     @Test

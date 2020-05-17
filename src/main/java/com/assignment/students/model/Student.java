@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
@@ -20,10 +22,14 @@ public class Student {
 
     @JsonProperty("first_name")
     @Column(name = "first_name")
+    @NotNull
+    @Size(min=1,max = 20)
     private String firstName;
 
     @JsonProperty("last_name")
     @Column(name = "last_name")
+    @NotNull
+    @Size(min=1,max = 20)
     private String lastName;
 
     @JsonProperty("email_addresses")
