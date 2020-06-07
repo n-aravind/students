@@ -22,6 +22,7 @@ public class Class {
 
     @JsonProperty("class_name")
     @Column(name = "class_name")
+    // TODO GP @NotEmpty is better, @NotBlank is best
     @NotNull
     @Size(min=2,max=15)
     private String className;

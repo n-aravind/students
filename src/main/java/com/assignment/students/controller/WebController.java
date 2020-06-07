@@ -15,7 +15,9 @@ import javax.validation.Valid;
 @Controller
 public class WebController {
 
+    // TODO GP need final keyword
     private ClassService classService;
+    // TODO GP need final keyword
     private StudentService studentService;
 
     public WebController(ClassService classService, StudentService studentService) {
@@ -23,12 +25,15 @@ public class WebController {
         this.studentService = studentService;
     }
 
+    // TODO GP /students. Even better would be /v1/students
     @GetMapping("/student")
     public String studentForm(Model model){
         model.addAttribute("student",new Student());
+        // TODO GP singular or plural?
         return"student";
     }
 
+    // TODO GP /v1/classes
     @GetMapping("/class")
     public String courseForm(Model model){
         model.addAttribute("class",new Class());
