@@ -37,9 +37,13 @@ public class WebController {
     @GetMapping("/class")
     public String courseForm(Model model){
         model.addAttribute("class",new Class());
+        // TODO model has all the stuff the form needs
+        model.addAttribute("classes", classService.getAllClasses());
+        // TODO would call this page enroll or courseForm or something
         return "class";
     }
 
+    // TODO GP /v1/classes/{id}/delete
     @GetMapping("delete/class/{id}")
     public String courseForm(@PathVariable long id,  Model model){
         classService.deleteClass(id);
@@ -47,6 +51,7 @@ public class WebController {
         return "class-registry";
     }
 
+    // TODO GP /v1/classes/{id}
     @GetMapping("/class/{id}")
     public String updateClass(@PathVariable long id, Model model){
         Class subject = classService.getClassById(id);
