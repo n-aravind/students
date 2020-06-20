@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -22,14 +23,13 @@ public class Class {
 
     @JsonProperty("class_name")
     @Column(name = "class_name")
-    // TODO GP @NotEmpty is better, @NotBlank is best
-    @NotNull
+    @NotBlank
     @Size(min=2,max=15)
     private String className;
 
     @JsonProperty("class_description")
     @Column(name = "class_description")
-    @NotNull
+    @NotBlank
     @Size(min=2,max=30)
     private String classDescription;
 

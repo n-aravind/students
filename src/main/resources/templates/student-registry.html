@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <body>
 <h1>Class Registry</h1>
-<div th:switch="${students}">
+<div th:switch="${/v1/students/all}">
     <div th:case="*">
         <table>
             <thead>
@@ -17,8 +17,8 @@
             <tr th:each="student : ${students}">
                 <td th:text="${student.firstName}"></td>
                 <td th:text="${student.lastName}"></td>
-                <td><a th:href="@{/student/{id}(id=${student.studentId})}">More Details</a></td>
-                <td><a th:href="@{/delete/student/{id}(id=${student.studentId})}">Delete</a></td>
+                <td><a th:href="@{/v1/students/{id}(id=${student.studentId})}">More Details</a></td>
+                <td><a th:href="@{/v1/students/{id}/delete(id=${student.studentId})}">Delete</a></td>
             </tr>
             </tbody>
         </table>

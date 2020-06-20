@@ -2,7 +2,6 @@ package com.assignment.students.controller;
 
 import com.assignment.students.model.Class;
 import com.assignment.students.model.Student;
-import com.assignment.students.repository.ClassRepository;
 import com.assignment.students.service.ClassService;
 import com.assignment.students.service.StudentService;
 import org.springframework.stereotype.Controller;
@@ -15,54 +14,46 @@ import javax.validation.Valid;
 @Controller
 public class WebController {
 
-    // TODO GP need final keyword
-    private ClassService classService;
-    // TODO GP need final keyword
-    private StudentService studentService;
+    private final ClassService classService;
+    private final StudentService studentService;
 
     public WebController(ClassService classService, StudentService studentService) {
         this.classService = classService;
         this.studentService = studentService;
     }
 
-    // TODO GP /students. Even better would be /v1/students
-    @GetMapping("/student")
+    @GetMapping("/v1/students")
     public String studentForm(Model model){
-        model.addAttribute("student",new Student());
-        // TODO GP singular or plural?
-        return"student";
+        model.addAttribute("students",new Student());
+        return"students";
     }
 
-    // TODO GP /v1/classes
-    @GetMapping("/class")
+    @GetMapping("/v1/classes")
     public String courseForm(Model model){
         model.addAttribute("class",new Class());
-        // TODO model has all the stuff the form needs
         model.addAttribute("classes", classService.getAllClasses());
-        // TODO would call this page enroll or courseForm or something
-        return "class";
+        return "course-form";
     }
 
-    // TODO GP /v1/classes/{id}/delete
-    @GetMapping("delete/class/{id}")
+
+    @GetMapping("/v1/classes/{id}/delete")
     public String courseForm(@PathVariable long id,  Model model){
         classService.deleteClass(id);
         model.addAttribute("classes",classService.getAllClasses());
         return "class-registry";
     }
 
-    // TODO GP /v1/classes/{id}
-    @GetMapping("/class/{id}")
+    @GetMapping("/v1/classes/{id}")
     public String updateClass(@PathVariable long id, Model model){
         Class subject = classService.getClassById(id);
         model.addAttribute("class",subject);
         return "update-class";
     }
 
-    @PostMapping("/class")
+    @PostMapping("/v1/classes")
     public String classSubmit(@Valid Class subject, BindingResult result, Model model){
         if (result.hasErrors()) {
-            return "class";
+            return "course-form";
         }
 
         classService.addClass(subject);
@@ -70,7 +61,7 @@ public class WebController {
         return "class-registry";
     }
 
-    @PostMapping(path = "/class/{id}")
+    @PostMapping(path = "/v1/classes/{id}")
     public String updateClass(@PathVariable long id, @Valid Class subject, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "class";
@@ -80,20 +71,20 @@ public class WebController {
         return "class-registry";
     }
 
-    @GetMapping("/classes")
+    @GetMapping("/v1/classes/all")
     public String getAllClasses(Model model){
         model.addAttribute("classes",classService.getAllClasses());
         return "class-registry";
     }
 
-    @GetMapping("/students")
+    @GetMapping("/v1/students/all")
     public String getAllStudents(Model model){
         model.addAttribute("students",studentService.getAllStudents());
         return "student-registry";
     }
 
 
-    @PostMapping("/student")
+    @PostMapping("/v1/students")
     public String studentSubmit(@Valid Student student, BindingResult result, Model model){
         if (result.hasErrors()) {
             return "student";
