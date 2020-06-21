@@ -50,7 +50,7 @@ public class WebController {
         return "update-class";
     }
 
-    @PostMapping("/v1/classes")
+    @PostMapping(path = "/v1/classes",params="action=save")
     public String classSubmit(@Valid Class subject, BindingResult result, Model model){
         if (result.hasErrors()) {
             return "course-form";
@@ -58,6 +58,11 @@ public class WebController {
 
         classService.addClass(subject);
         model.addAttribute("classes",classService.getAllClasses());
+        return "class-registry";
+    }
+
+    @PostMapping(path = "/v1/classes",params="action=cancel")
+    public String cancelFormSubmission(@Valid Class subject, BindingResult result, Model model){
         return "class-registry";
     }
 
