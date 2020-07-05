@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Add New Class</h1>
-<form action="#" th:action="@{/class}" th:object="${class}" method="post">
+<form action="#" th:action="@{/v1/classes}" th:object="${class}" method="post">
 <table>
     <tr>
         <td>Class Name:</td>
@@ -19,7 +19,8 @@
         <td th:if="${#fields.hasErrors('classDescription')}" th:errors="*{classDescription}">ClassDescriptionError</td>
     </tr>
     <tr>
-        <td><button type="submit">Submit</button></td>
+        <td><button type="submit" name="action" value="save">Submit</button></td>
+        <td><button type="submit" name="action" value="cancel">Cancel</button></td>
     </tr>
 </table>
 </form>

@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Update Class</h1>
-<form action="#" th:action="@{/class/{id}(id=${class.classId})}" th:object="${class}" method="post">
+<form action="#" th:action="@{/v1/classes/{id}(id=${class.classId})}" th:object="${class}" method="post">
     <table>
         <tr>
             <td>Class Name:</td>
