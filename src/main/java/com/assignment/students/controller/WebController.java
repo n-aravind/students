@@ -24,8 +24,8 @@ public class WebController {
 
     @GetMapping("/v1/students")
     public String studentForm(Model model){
-        model.addAttribute("students",new Student());
-        return"students";
+        model.addAttribute("student",new Student());
+        return"student-form";
     }
 
     @GetMapping("/v1/classes")
@@ -88,6 +88,19 @@ public class WebController {
         return "student-registry";
     }
 
+    @GetMapping("/v1/students/{studentId}")
+    public String getStudent(@PathVariable long studentId,  Model model){
+        Student student = studentService.getStudentById(studentId);
+        model.addAttribute("student",student);
+        return "student-form";
+    }
+
+    @GetMapping("/v1/students/{studentId}/delete")
+    public String getStudent(@PathVariable String studentId,  Model model){
+        studentService.deleteStudent(studentId);
+        model.addAttribute("students",studentService.getAllStudents());
+        return "student-registry";
+    }
 
     @PostMapping("/v1/students")
     public String studentSubmit(@Valid Student student, BindingResult result, Model model){

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <body>
-<h1>Class Registry</h1>
+<h1>Student Registry</h1>
 <div th:switch="${/v1/students/all}">
     <div th:case="*">
         <table>
@@ -23,7 +23,7 @@
             </tbody>
         </table>
     </div>
-    <p><a href="/student">Enroll a new student</a></p>
+    <p><a href="/v1/students">Enroll a new student</a></p>
     <p><a href="/">Go Back To Main Menu</a></p>
 </div>
 </body>

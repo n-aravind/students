@@ -7,22 +7,28 @@
 <body>
 <h1>Add New Class</h1>
 <form action="#" th:action="@{/v1/classes}" th:object="${class}" method="post">
-<table>
-    <tr>
-        <td>Class Name:</td>
-        <td><input type="text" th:field="*{className}"/></td>
-        <td th:if="${#fields.hasErrors('className')}" th:errors="*{className}">Class Name Error</td>
-    </tr>
-    <tr>
-        <td>Description:</td>
-        <td><input type="text" th:field="*{classDescription}"/></td>
-        <td th:if="${#fields.hasErrors('classDescription')}" th:errors="*{classDescription}">ClassDescriptionError</td>
-    </tr>
-    <tr>
-        <td><button type="submit" name="action" value="save">Submit</button></td>
-        <td><button type="submit" name="action" value="cancel">Cancel</button></td>
-    </tr>
-</table>
+    <table>
+        <tr>
+            <td>Class Name:</td>
+            <td><input type="text" th:field="*{className}"/></td>
+            <td th:if="${#fields.hasErrors('className')}" th:errors="*{className}">Class Name Error</td>
+        </tr>
+        <tr>
+            <td>Description:</td>
+            <td><input type="text" th:field="*{classDescription}"/></td>
+            <td th:if="${#fields.hasErrors('classDescription')}" th:errors="*{classDescription}">ClassDescriptionError
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit" name="action" value="save" >Submit</button>
+            </td>
+            <td>
+                <button type="submit" name="action" value="cancel" onclick="displayAlert()">Cancel</button>
+            </td>
+            <script>function displayAlert() { alert("You have clicked cancel. Your changes will not be saved ");}</script>
+        </tr>
+    </table>
 </form>
 </body>
 </html>
