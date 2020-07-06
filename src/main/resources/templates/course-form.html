@@ -1,22 +1,22 @@
 <!DOCTYPEHTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Form to add a new class</title>
+    <title>Form to add a new course</title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
 </head>
 <body>
-<h1>Add New Class</h1>
-<form action="#" th:action="@{/v1/classes}" th:object="${class}" method="post">
+<h1>Add New Course</h1>
+<form action="#" th:action="@{/v1/courses}" th:object="${course}" method="post">
     <table>
         <tr>
-            <td>Class Name:</td>
-            <td><input type="text" th:field="*{className}"/></td>
-            <td th:if="${#fields.hasErrors('className')}" th:errors="*{className}">Class Name Error</td>
+            <td>Course Name:</td>
+            <td><input type="text" th:field="*{courseName}"/></td>
+            <td th:if="${#fields.hasErrors('courseName')}" th:errors="*{courseName}">Course Name Error</td>
         </tr>
         <tr>
             <td>Description:</td>
-            <td><input type="text" th:field="*{classDescription}"/></td>
-            <td th:if="${#fields.hasErrors('classDescription')}" th:errors="*{classDescription}">ClassDescriptionError
+            <td><input type="text" th:field="*{courseDescription}"/></td>
+            <td th:if="${#fields.hasErrors('courseDescription')}" th:errors="*{courseDescription}">CourseDescriptionError
             </td>
         </tr>
         <tr>

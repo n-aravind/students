@@ -1,0 +1,27 @@
+<!DOCTYPEHTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Update Course</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+</head>
+<body>
+<h1>Update Class</h1>
+<form action="#" th:action="@{/v1/courses/{id}(id=${course.courseId})}" th:object="${course}" method="post">
+    <table>
+        <tr>
+            <td>Course Name:</td>
+            <td><input type="text" th:field="*{courseName}"/></td>
+            <td th:if="${#fields.hasErrors('courseName')}" th:errors="*{courseName}">Course Name Error</td>
+        </tr>
+        <tr>
+            <td>Description:</td>
+            <td><input type="text" th:field="*{courseDescription}"/></td>
+            <td th:if="${#fields.hasErrors('courseDescription')}" th:errors="*{courseDescription}">Course Description Error</td>
+        </tr>
+        <tr>
+            <td><button type="submit">Submit</button></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

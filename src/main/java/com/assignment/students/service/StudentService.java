@@ -1,6 +1,6 @@
 package com.assignment.students.service;
 
-import com.assignment.students.model.Class;
+import com.assignment.students.model.Course;
 import com.assignment.students.model.Student;
 import com.assignment.students.repository.StudentRepository;
 import org.springframework.stereotype.Service;
@@ -30,16 +30,16 @@ public class StudentService {
 
     @Transactional
     public Student enrollStudent(Student student) {
-        for (Class subject : student.getClasses()) {
-            studentRepository.enrollStudent(subject.getClassId(), student.getStudentId());
+        for (Course subject : student.getCourses()) {
+            studentRepository.enrollStudent(subject.getCourseId(), student.getStudentId());
         }
         return student;
     }
 
     @Transactional
     public Student unEnrollStudent(Student student) {
-        for (Class subject : student.getClasses()) {
-            studentRepository.unEnrollStudent(subject.getClassId(), student.getStudentId());
+        for (Course subject : student.getCourses()) {
+            studentRepository.unEnrollStudent(subject.getCourseId(), student.getStudentId());
         }
         return student;
     }

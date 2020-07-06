@@ -1,6 +1,6 @@
 package com.assignment.students.repository;
 
-import com.assignment.students.model.Class;
+import com.assignment.students.model.Course;
 import com.assignment.students.model.EmailAddresses;
 import com.assignment.students.model.Student;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -39,20 +39,20 @@ public class StudentRepository {
             }
         }
 
-        if(student.getClasses().size() > 0){
-            for (Class subject : student.getClasses()){
-                updateClassesEnrolled(subject.getClassId(),student_id);
+        if(student.getCourses().size() > 0){
+            for (Course subject : student.getCourses()){
+                updateCoursesEnrolled(subject.getCourseId(),student_id);
             }
         }
 
         return student_id;
     }
 
-    private void updateClassesEnrolled(long classId, long studentId) {
-        String sql = "INSERT INTO class_student (student_id, class_id) VALUES(:student_id,:class_id)";
+    private void updateCoursesEnrolled(long courseId, long studentId) {
+        String sql = "INSERT INTO course_student (student_id, course_id) VALUES(:student_id,:course_id)";
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("student_id",studentId)
-                .addValue("class_id",classId);
+                .addValue("course_id",courseId);
         namedParameterJdbcTemplate.update(sql,params);
     }
 
@@ -70,18 +70,18 @@ public class StudentRepository {
         return namedParameterJdbcTemplate.query(sql,new MapSqlParameterSource(),BeanPropertyRowMapper.newInstance(Student.class));
     }
 
-    public void enrollStudent(long classId , long studentId) {
-        updateClassesEnrolled(classId,studentId);
+    public void enrollStudent(long courseId , long studentId) {
+        updateCoursesEnrolled(courseId,studentId);
     }
 
-    public void unEnrollStudent(long classId , long studentId) {
-        unEnrollStudentFromClass(classId,studentId);
+    public void unEnrollStudent(long courseId , long studentId) {
+        unEnrollStudentFromClass(courseId,studentId);
     }
 
-    private void unEnrollStudentFromClass(long classId, long studentId) {
-        String sql = "DELETE FROM class_student where student_id = :student_id AND class_id = :class_id";
+    private void unEnrollStudentFromClass(long courseId, long studentId) {
+        String sql = "DELETE FROM course_student where student_id = :student_id AND course_id = :course_id";
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("class_id", classId)
+        mapSqlParameterSource.addValue("course_id", courseId)
                 .addValue("student_id",studentId);
         namedParameterJdbcTemplate.update(sql,mapSqlParameterSource);
     }
@@ -89,7 +89,7 @@ public class StudentRepository {
 
     public void deleteStudent(String id) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource("student_id",id);
-        String sql = "DELETE FROM class_student where student_id = :student_id";
+        String sql = "DELETE FROM course_student where student_id = :student_id";
         namedParameterJdbcTemplate.update(sql,mapSqlParameterSource);
         sql = "DELETE FROM email_addresses where student_id = :student_id";
         namedParameterJdbcTemplate.update(sql,mapSqlParameterSource);
@@ -99,14 +99,14 @@ public class StudentRepository {
 
     public Student getStudentById(long id) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource("student_id",id);
-        String sql = "SELECT * FROM class where class_id IN (SELECT class_id from class_student where student_id = :student_id)";
-        List<Class> classList = namedParameterJdbcTemplate.query(sql,mapSqlParameterSource,BeanPropertyRowMapper.newInstance(Class.class));
+        String sql = "SELECT * FROM course where course_id IN (SELECT course_id from course_student where student_id = :student_id)";
+        List<Course> courseList = namedParameterJdbcTemplate.query(sql,mapSqlParameterSource,BeanPropertyRowMapper.newInstance(Course.class));
         sql = "SELECT * FROM email_addresses where student_id = :student_id";
         List<EmailAddresses> emailAddressesList = namedParameterJdbcTemplate.query(sql,mapSqlParameterSource,BeanPropertyRowMapper.newInstance(EmailAddresses.class));
         sql = "SELECT * FROM student where student_id = :student_id";
         Student student = namedParameterJdbcTemplate.queryForObject(sql,mapSqlParameterSource,BeanPropertyRowMapper.newInstance(Student.class));
         student.setEmailAddresses(emailAddressesList);
-        student.setClasses(classList);
+        student.setCourses(courseList);
         return student;
     }
 

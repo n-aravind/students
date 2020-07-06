@@ -1,8 +1,8 @@
 package com.assignment.students.controller;
 
-import com.assignment.students.model.Class;
+import com.assignment.students.model.Course;
 import com.assignment.students.model.Student;
-import com.assignment.students.service.ClassService;
+import com.assignment.students.service.CourseService;
 import com.assignment.students.service.StudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +14,11 @@ import javax.validation.Valid;
 @Controller
 public class WebController {
 
-    private final ClassService classService;
+    private final CourseService courseService;
     private final StudentService studentService;
 
-    public WebController(ClassService classService, StudentService studentService) {
-        this.classService = classService;
+    public WebController(CourseService courseService, StudentService studentService) {
+        this.courseService = courseService;
         this.studentService = studentService;
     }
 
@@ -28,58 +28,58 @@ public class WebController {
         return"student-form";
     }
 
-    @GetMapping("/v1/classes")
+    @GetMapping("/v1/courses")
     public String courseForm(Model model){
-        model.addAttribute("class",new Class());
-        model.addAttribute("classes", classService.getAllClasses());
+        model.addAttribute("course",new Course());
+        model.addAttribute("courses", courseService.getAllCourses());
         return "course-form";
     }
 
 
-    @GetMapping("/v1/classes/{id}/delete")
+    @GetMapping("/v1/courses/{id}/delete")
     public String courseForm(@PathVariable long id,  Model model){
-        classService.deleteClass(id);
-        model.addAttribute("classes",classService.getAllClasses());
-        return "class-registry";
+        courseService.deleteCourse(id);
+        model.addAttribute("courses", courseService.getAllCourses());
+        return "course-registry";
     }
 
-    @GetMapping("/v1/classes/{id}")
-    public String updateClass(@PathVariable long id, Model model){
-        Class subject = classService.getClassById(id);
-        model.addAttribute("class",subject);
-        return "update-class";
+    @GetMapping("/v1/courses/{id}")
+    public String updateCourse(@PathVariable long id, Model model){
+        Course subject = courseService.getCourseById(id);
+        model.addAttribute("course",subject);
+        return "update-course";
     }
 
-    @PostMapping(path = "/v1/classes",params="action=save")
-    public String classSubmit(@Valid Class subject, BindingResult result, Model model){
+    @PostMapping(path = "/v1/courses",params="action=save")
+    public String courseSubmit(@Valid Course subject, BindingResult result, Model model){
         if (result.hasErrors()) {
             return "course-form";
         }
 
-        classService.addClass(subject);
-        model.addAttribute("classes",classService.getAllClasses());
-        return "class-registry";
+        courseService.addCourse(subject);
+        model.addAttribute("courses", courseService.getAllCourses());
+        return "course-registry";
     }
 
-    @PostMapping(path = "/v1/classes",params="action=cancel")
-    public String cancelFormSubmission(@Valid Class subject, BindingResult result, Model model){
-        return "class-registry";
+    @PostMapping(path = "/v1/courses",params="action=cancel")
+    public String cancelFormSubmission(@Valid Course subject, BindingResult result, Model model){
+        return "course-registry";
     }
 
-    @PostMapping(path = "/v1/classes/{id}")
-    public String updateClass(@PathVariable long id, @Valid Class subject, BindingResult result, Model model) {
+    @PostMapping(path = "/v1/courses/{id}")
+    public String updateCourse(@PathVariable long id, @Valid Course subject, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "class";
+            return "course";
         }
-        classService.updateClass(id, subject);
-        model.addAttribute("classes",classService.getAllClasses());
-        return "class-registry";
+        courseService.updateCourse(id, subject);
+        model.addAttribute("coursees", courseService.getAllCourses());
+        return "course-registry";
     }
 
-    @GetMapping("/v1/classes/all")
-    public String getAllClasses(Model model){
-        model.addAttribute("classes",classService.getAllClasses());
-        return "class-registry";
+    @GetMapping("/v1/courses/all")
+    public String getAllCourses(Model model){
+        model.addAttribute("courses", courseService.getAllCourses());
+        return "course-registry";
     }
 
     @GetMapping("/v1/students/all")
