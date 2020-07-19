@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
 </head>
 <body>
-<h1>Add New Student</h1>
+<h1>Register A Student</h1>
 <form action="#" th:action="@{/v1/students}" th:object="${student}" method="post">
     <table>
         <tr>
@@ -31,17 +31,6 @@
                 <option th:value="'ACADEMIC'" th:text="Academic"></option>
                 <option th:value="'OTHER'" th:text="Other"></option>
             </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Course Id:</td>
-            <td><input type="text" th:field="*{courses[0].courseId}"/>
-            </td>
-        </tr>
-        <tr>
-            <td>Course Name:</td>
-            <td>
-                <input type="text" th:field="*{courses[0].courseName}"/>
             </td>
         </tr>
         <tr>

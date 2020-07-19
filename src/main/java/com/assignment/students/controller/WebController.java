@@ -76,6 +76,7 @@ public class WebController {
         }
     }
 
+
     @PostMapping(path = "/v1/courses",params="action=save")
     public String courseSubmit(@Valid Course subject, BindingResult result, Model model){
         if (result.hasErrors()) {
@@ -116,9 +117,38 @@ public class WebController {
 
     @GetMapping("/v1/students/{studentId}")
     public String getStudent(@PathVariable long studentId,  Model model){
+        getStudentDetails(studentId, model);
+        return "student-details";
+    }
+
+    @GetMapping("/v1/students/{studentId}/unenroll/{courseId}")
+    public String unEnrollCourseFromStudent(@PathVariable long studentId, @PathVariable long courseId, Model model){
+        courseStudentService.unEnrollStudentFromCourse(courseId,studentId);
+        getStudentDetails(studentId, model);
+        return "student-details";
+    }
+
+    private void getStudentDetails(@PathVariable long studentId, Model model) {
+        Student student = studentService.getStudentById(studentId);
+        model.addAttribute("student", student);
+        if (student.getCourses().size() == 0) {
+            model.addAttribute("enrolledCourses", "none");
+        }
+    }
+
+    @GetMapping("/v1/students/{studentId}/enroll/{courseId}")
+    public String enrollStudentIntoCourse(@PathVariable long studentId, @PathVariable long courseId, Model model){
+        courseStudentService.enrollStudentIntoCourse(courseId,studentId);
         Student student = studentService.getStudentById(studentId);
         model.addAttribute("student",student);
-        return "student-form";
+        return "student-details";
+    }
+
+    @GetMapping("/v1/students/{studentId}/enroll")
+    public String getAvailableCoursesForStudent(@PathVariable long studentId, Model model){
+        model.addAttribute("courses",studentService.getUnEnrolledCourses(studentId));
+        model.addAttribute("student_id",studentId);
+        return "available-courses";
     }
 
     @GetMapping("/v1/students/{studentId}/delete")
@@ -133,8 +163,10 @@ public class WebController {
         if (result.hasErrors()) {
             return "student";
         }
+        student.setCourses(new ArrayList<>());
         studentService.addStudent(student);
-        model.addAttribute("students",studentService.getAllStudents());
-        return "student-registry";
+        model.addAttribute("student",student);
+        model.addAttribute("enrolledCourses", "none");
+        return "student-details";
     }
 }

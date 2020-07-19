@@ -52,4 +52,8 @@ public class StudentService {
     public Student getStudentById(long id) {
         return studentRepository.getStudentById(id);
     }
+
+    public List<Course> getUnEnrolledCourses(long studentId){
+        return studentRepository.getUnEnrolledCourses(studentId);
+    }
 }

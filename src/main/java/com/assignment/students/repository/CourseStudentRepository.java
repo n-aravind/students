@@ -36,4 +36,12 @@ public class CourseStudentRepository {
         params.addValue("student_id",studentId);
         namedParameterJdbcTemplate.update(sql,params);
     }
+
+    public void enrollStudentIntoCourse(long courseId, long studentId) {
+        String sql = "INSERT INTO course_student (student_id,course_id) values (:student_id,:course_id)";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("course_id",courseId);
+        params.addValue("student_id",studentId);
+        namedParameterJdbcTemplate.update(sql,params);
+    }
 }

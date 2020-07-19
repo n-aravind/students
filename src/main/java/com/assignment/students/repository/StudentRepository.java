@@ -110,4 +110,9 @@ public class StudentRepository {
         return student;
     }
 
+    public List<Course> getUnEnrolledCourses(long studentId) {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource("student_id",studentId);
+        String sql = "SELECT * from course where course_id not in (select distinct course_id from course_student where student_id = :student_id)";
+        return namedParameterJdbcTemplate.query(sql,mapSqlParameterSource,BeanPropertyRowMapper.newInstance(Course.class));
+    }
 }
