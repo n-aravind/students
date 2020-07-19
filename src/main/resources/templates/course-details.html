@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<body>
+<h1>Course Details</h1>
+<div th:switch="${/v1/course/{id}}">
+    <div th:case="*" th:object="${course}">
+        <table>
+            <thead>
+            <tr>
+                <td><b>Course Name : </b></td>
+                <td th:text="*{courseName}"></td>
+            </tr>
+            <tr>
+                <td><b>Course Description : </b></td>
+                <td th:text="*{courseDescription}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div th:if="${students=='no-data'}">
+            <h3> No Students Enrolled </h3>
+        </div>
+        <div th:unless="${students=='no-data'}">
+            <h3><u>Students enrolled in this course</u></h3>
+        <table>
+            <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="student : ${students}">
+                <td th:text="${student.firstName}"></td>
+                <td th:text="${student.lastName}"></td>
+                <td><a th:href="@{/v1/courses/{courseId}/unenroll/{studentId}(courseId=${course.courseId},studentId=${student.studentId})}">Unenroll</a></td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+    <p><a href="/v1/courses/all">Go Back To Course Registry</a></p>
+    <p><a href="/">Go Back To Main Menu</a></p>
+</div>
+</body>

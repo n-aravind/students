@@ -3,6 +3,7 @@ package com.assignment.students.controller;
 import com.assignment.students.model.Course;
 import com.assignment.students.model.Student;
 import com.assignment.students.service.CourseService;
+import com.assignment.students.service.CourseStudentService;
 import com.assignment.students.service.StudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,16 +11,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class WebController {
 
     private final CourseService courseService;
     private final StudentService studentService;
+    private final CourseStudentService courseStudentService;
 
-    public WebController(CourseService courseService, StudentService studentService) {
+    public WebController(CourseService courseService, StudentService studentService, CourseStudentService courseStudentService) {
         this.courseService = courseService;
         this.studentService = studentService;
+        this.courseStudentService = courseStudentService;
     }
 
     @GetMapping("/v1/students")
@@ -43,11 +48,32 @@ public class WebController {
         return "course-registry";
     }
 
-    @GetMapping("/v1/courses/{id}")
-    public String updateCourse(@PathVariable long id, Model model){
+    @GetMapping("/v1/courses/{courseId}/unenroll/{studentId}")
+    public String unEnrollStudentFromCourse(@PathVariable long courseId, @PathVariable long studentId, Model model){
+        courseStudentService.unEnrollStudentFromCourse(courseId,studentId);
+        getCourseDetails(courseId, model);
+        return "course-details";
+    }
+
+    @GetMapping("/v1/courses/{id}/studentsEnrolled")
+    public String getStudentsByCourseId(@PathVariable long id, Model model){
+        getCourseDetails(id, model);
+        return "course-details";
+    }
+
+    private void getCourseDetails(@PathVariable long id, Model model) {
         Course subject = courseService.getCourseById(id);
+        List<Student> studentsList = new ArrayList<>();
+        for (Long studentId : courseStudentService.getStudentIdsByCourseId(id)){
+            Student student = studentService.getStudentById(studentId);
+            studentsList.add(student);
+        }
         model.addAttribute("course",subject);
-        return "update-course";
+        if(studentsList.size() == 0){
+            model.addAttribute("students","no-data");
+        }else {
+            model.addAttribute("students", studentsList);
+        }
     }
 
     @PostMapping(path = "/v1/courses",params="action=save")
