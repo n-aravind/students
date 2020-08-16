@@ -1,6 +1,15 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <body>
+<div class="breadcrumbs">
+    <a href="/">Main Menu</a>
+    <a> / </a>
+    <a href="/v1/students/all">Student Registry</a>
+    <a> / </a>
+    <a th:href="@{/v1/students/{id}(id=${studentId})}">Student Details</a>
+    <a> / </a>
+    <a style="float:right" href="/logout">Sign Out</a>
+</div>
 <h1>Available Courses</h1>
 <div th:switch="${/v1/courses/all}">
     <div th:case="*">
@@ -20,6 +29,5 @@
             </tbody>
         </table>
     </div>
-    <p><a th:href="@{/v1/students/{id}(id=${studentId})}">Go Back To Details Page</a></p>
 </div>
 </body>

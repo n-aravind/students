@@ -1,10 +1,13 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>RegistrarApplication</title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
 </head>
+
 <body>
+<a style="float:right" href="/logout">Sign Out</a>
 <h1>Registrar Application</h1>
 <p><a href="/v1/courses/all"> Course Registry </a></p>
 <p><a href="/v1/students/all"> Student Registry </a></p>

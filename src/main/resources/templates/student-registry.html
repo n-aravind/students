@@ -1,6 +1,11 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <body>
+<div class="breadcrumbs">
+    <a href="/">Main Menu</a>
+    <a> / </a>
+    <a style="float:right" href="/logout">Sign Out</a>
+</div>
 <h1>Student Registry</h1>
 <div th:switch="${/v1/students/all}">
     <div th:case="*">
@@ -32,6 +37,5 @@
         </table>
     </div>
     <p><a href="/v1/students">Enroll a new student</a></p>
-    <p><a href="/">Go Back To Main Menu</a></p>
 </div>
 </body>
