@@ -6,7 +6,6 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class Student {
     @JsonProperty("email_addresses")
     private List<EmailAddresses> emailAddresses;
 
-    @JsonProperty("classes")
-    private List<Class> classes;
+    @JsonProperty("courses")
+    private List<Course> courses;
 
 }

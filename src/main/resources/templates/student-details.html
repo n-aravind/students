@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<body>
+<h1>Student Details</h1>
+<div th:switch="${/v1/student/{id}}">
+    <div th:case="*" th:object="${student}">
+        <table>
+            <thead>
+            <tr>
+                <td th:text="'First Name  :  ' + *{firstName}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Last Name  :  ' + *{lastName}"></td>
+            </tr>
+            <tr/>
+            <tr/>
+            <tr>
+                <td><b>Email Addresses</b></td>
+            </tr>
+            <tr th:each="emailAddress : *{emailAddresses}">
+                <td><span th:text="${emailAddress.emailType + '  :  ' + emailAddress.emailAddress}"> Email Address </span></td>
+            </tr>
+            </thead>
+        </table>
+            <div th:if="${enrolledCourses=='none'}">
+                <h3> No Courses Enrolled </h3>
+            </div>
+            <div th:unless="${enrolledCourses=='none'}">
+            <h4><u>Courses Enrolled</u></h4>
+            <table>
+                <tbody>
+                <tr th:each="course : *{courses}">
+                    <td><span th:text="${course.courseName}"> Course </span></td>
+                    <td>
+                        <form method="POST"
+                              th:action="@{/v1/students/{studentId}/unenroll/{courseId}(courseId=${course.courseId},studentId=${student.studentId})}">
+                            <button type="submit" style="width: 70px; height: 20px;" name="submit" value="value" class="link-button">Unenroll</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+        <p><a th:href="@{/v1/students/{studentId}/enroll(studentId=${student.studentId})}">Enroll a course</a></p>
+    </div>
+    <p><a href="/v1/students/all">Go Back To Student Registry</a></p>
+    <p><a href="/">Go Back To Main Menu</a></p>
+</div>
+</body>

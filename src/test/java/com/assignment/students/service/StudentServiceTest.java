@@ -1,6 +1,6 @@
 package com.assignment.students.service;
 
-import com.assignment.students.model.Class;
+import com.assignment.students.model.Course;
 import com.assignment.students.model.EmailAddresses;
 import com.assignment.students.model.EmailType;
 import com.assignment.students.model.Student;
@@ -21,25 +21,25 @@ class StudentServiceTest {
 
     @Test
     void addStudent() {
-        List<Class> classList = new ArrayList<>();
-        classList.add(Class.builder().className("Algebra").classDescription("Test Description").build());
+        List<Course> courseList = new ArrayList<>();
+        courseList.add(Course.builder().courseName("Algebra").courseDescription("Test Description").build());
         List<EmailAddresses> emailAddressesList = new ArrayList<>();
         emailAddressesList.add(EmailAddresses.builder().emailAddress("john.doe@gmail.com").emailType(EmailType.PERSONAL).build());
-        Student student = Student.builder().firstName("John").lastName("Doe").emailAddresses(emailAddressesList).classes(classList).build();
+        Student student = Student.builder().firstName("John").lastName("Doe").emailAddresses(emailAddressesList).courses(courseList).build();
         studentService.addStudent(student);
         ArgumentCaptor<Student> studentArgumentCaptor = ArgumentCaptor.forClass(Student.class);
         verify(studentRepository).addStudent(studentArgumentCaptor.capture());
-        assertEquals("Algebra", studentArgumentCaptor.getValue().getClasses().get(0).getClassName());
+        assertEquals("Algebra", studentArgumentCaptor.getValue().getCourses().get(0).getCourseName());
         assertEquals(EmailType.PERSONAL, studentArgumentCaptor.getValue().getEmailAddresses().get(0).getEmailType());
     }
 
     @Test
     void getAllStudents() {
-        List<Class> classList = new ArrayList<>();
-        classList.add(Class.builder().className("Algebra").classDescription("Test Description").build());
+        List<Course> courseList = new ArrayList<>();
+        courseList.add(Course.builder().courseName("Algebra").courseDescription("Test Description").build());
         List<EmailAddresses> emailAddressesList = new ArrayList<>();
         emailAddressesList.add(EmailAddresses.builder().emailAddress("john.doe@gmail.com").emailType(EmailType.PERSONAL).build());
-        Student student = Student.builder().firstName("John").lastName("Doe").emailAddresses(emailAddressesList).classes(classList).build();
+        Student student = Student.builder().firstName("John").lastName("Doe").emailAddresses(emailAddressesList).courses(courseList).build();
         studentService.addStudent(student);
         List<Student> studentList = new ArrayList<>();
         studentList.add(student);
@@ -50,14 +50,14 @@ class StudentServiceTest {
 
     @Test
     void enrollStudent() {
-        List<Class> classList = new ArrayList<>();
-        classList.add(Class.builder().classId(1).className("Algebra").classDescription("Test Description").build());
+        List<Course> courseList = new ArrayList<>();
+        courseList.add(Course.builder().courseId(1).courseName("Algebra").courseDescription("Test Description").build());
         List<EmailAddresses> emailAddressesList = new ArrayList<>();
         emailAddressesList.add(EmailAddresses.builder().emailAddress("john.doe@gmail.com").emailType(EmailType.PERSONAL).build());
-        Student student = Student.builder().firstName("John").lastName("Doe").emailAddresses(emailAddressesList).classes(classList).build();
+        Student student = Student.builder().firstName("John").lastName("Doe").emailAddresses(emailAddressesList).courses(courseList).build();
         studentService.addStudent(student);
-        classList.add(Class.builder().classId(2).className("History").classDescription("Test Description").build());
-        student.setClasses(classList);
+        courseList.add(Course.builder().courseId(2).courseName("History").courseDescription("Test Description").build());
+        student.setCourses(courseList);
         studentService.enrollStudent(student);
         verify(studentRepository,times(1)).enrollStudent(1L,0L);
         verify(studentRepository,times(1)).enrollStudent(2L,0L);
@@ -65,13 +65,13 @@ class StudentServiceTest {
 
     @Test
     void unEnrollStudent() {
-        List<Class> classList = new ArrayList<>();
-        classList.add(Class.builder().classId(1).className("Algebra").classDescription("Test Description").build());
+        List<Course> courseList = new ArrayList<>();
+        courseList.add(Course.builder().courseId(1).courseName("Algebra").courseDescription("Test Description").build());
         List<EmailAddresses> emailAddressesList = new ArrayList<>();
         emailAddressesList.add(EmailAddresses.builder().emailAddress("john.doe@gmail.com").emailType(EmailType.PERSONAL).build());
-        Student student = Student.builder().firstName("John").lastName("Doe").emailAddresses(emailAddressesList).classes(classList).build();
+        Student student = Student.builder().firstName("John").lastName("Doe").emailAddresses(emailAddressesList).courses(courseList).build();
         studentService.addStudent(student);
-        student.setClasses(classList);
+        student.setCourses(courseList);
         studentService.unEnrollStudent(student);
         verify(studentRepository,times(1)).unEnrollStudent(1L,0L);
     }
@@ -84,11 +84,11 @@ class StudentServiceTest {
 
     @Test
     void getStudentById() {
-        List<Class> classList = new ArrayList<>();
-        classList.add(Class.builder().className("Algebra").classDescription("Test Description").build());
+        List<Course> courseList = new ArrayList<>();
+        courseList.add(Course.builder().courseName("Algebra").courseDescription("Test Description").build());
         List<EmailAddresses> emailAddressesList = new ArrayList<>();
         emailAddressesList.add(EmailAddresses.builder().emailAddress("john.doe@gmail.com").emailType(EmailType.PERSONAL).build());
-        when(studentService.getStudentById(1)).thenReturn(Student.builder().firstName("John").lastName("Doe").emailAddresses(emailAddressesList).classes(classList).build());
+        when(studentService.getStudentById(1)).thenReturn(Student.builder().firstName("John").lastName("Doe").emailAddresses(emailAddressesList).courses(courseList).build());
         Student student = studentService.getStudentById(1);
         assertEquals("John", student.getFirstName());
     }

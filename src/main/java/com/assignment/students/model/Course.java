@@ -15,22 +15,22 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Class {
+public class Course {
 
-    @JsonProperty("class_id")
-    @Column(name = "class_id")
-    private long classId;
+    @JsonProperty("course_id")
+    @Column(name = "course_id")
+    private long courseId;
 
-    @JsonProperty("class_name")
-    @Column(name = "class_name")
+    @JsonProperty("course_name")
+    @Column(name = "course_name")
     @NotBlank
     @Size(min=2,max=15)
-    private String className;
+    private String courseName;
 
-    @JsonProperty("class_description")
-    @Column(name = "class_description")
+    @JsonProperty("course_description")
+    @Column(name = "course_description")
     @NotBlank
     @Size(min=2,max=30)
-    private String classDescription;
+    private String courseDescription;
 
 }

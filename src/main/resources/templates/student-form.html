@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Form to add a new Student</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+</head>
+<body>
+<h1>Register A Student</h1>
+<form action="#" th:action="@{/v1/students}" th:object="${student}" method="post">
+    <table>
+        <tr>
+            <td>First Name:</td>
+            <td><input type="text" th:field="*{firstName}"/></td>
+            <td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Student Name Error</td>
+        </tr>
+        <tr>
+            <td>Last Name:</td>
+            <td><input type="text" th:field="*{lastName}"/></td>
+            <td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Student last Name Error</td>
+        </tr>
+        <tr>
+            <td>Email Address:</td>
+            <td>
+                <input type="text" th:field="*{emailAddresses[0].emailAddress}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Email Type:</td>
+            <td><select th:field="*{emailAddresses[0].emailType}">
+                <option th:value="'PERSONAL'" th:text="Personal"></option>
+                <option th:value="'ACADEMIC'" th:text="Academic"></option>
+                <option th:value="'OTHER'" th:text="Other"></option>
+            </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit">Submit</button>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

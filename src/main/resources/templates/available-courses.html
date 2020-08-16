@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<body>
+<h1>Available Courses</h1>
+<div th:switch="${/v1/courses/all}">
+    <div th:case="*">
+        <table>
+            <thead>
+            <tr>
+                <th>Course Name</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="course : ${courses}">
+                <td th:text="${course.courseName}"></td>
+                <td th:text="${course.courseDescription}"></td>
+                <td><a th:href="@{/v1/students/{studentId}/enroll/{courseId}(courseId=${course.courseId},studentId=${studentId})}">Enroll</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a th:href="@{/v1/students/{id}(id=${studentId})}">Go Back To Details Page</a></p>
+</div>
+</body>
