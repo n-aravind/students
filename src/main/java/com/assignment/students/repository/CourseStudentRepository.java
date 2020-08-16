@@ -1,5 +1,6 @@
 package com.assignment.students.repository;
 
+import com.assignment.students.model.Student;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -21,6 +22,12 @@ public class CourseStudentRepository {
         String sql = "SELECT student_id FROM course_student where course_id = :course_id";
         SqlParameterSource param = new MapSqlParameterSource("course_id", courseId);
         return namedParameterJdbcTemplate.queryForList(sql,param,Long.class);
+    }
+
+    public List<Student> getStudentsByCourseId(long courseId) {
+        String sql = "SELECT * FROM student where student_id in (select student_id from course_student where course_id = :course_id)";
+        SqlParameterSource param = new MapSqlParameterSource("course_id", courseId);
+        return namedParameterJdbcTemplate.query(sql,param,BeanPropertyRowMapper.newInstance(Student.class));
     }
 
     public List<Long> getCourseIdsByStudentId(long studentId) {

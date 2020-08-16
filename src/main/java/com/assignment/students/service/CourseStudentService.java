@@ -1,5 +1,6 @@
 package com.assignment.students.service;
 
+import com.assignment.students.model.Student;
 import com.assignment.students.repository.CourseStudentRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,10 @@ public class CourseStudentService {
 
     public List<Long> getStudentIdsByCourseId(long courseId){
         return courseStudentRepository.getStudentIdsByCourseId(courseId);
+    }
+
+    public List<Student> getStudentsByCourseId(long courseId){
+        return courseStudentRepository.getStudentsByCourseId(courseId);
     }
 
     public List<Long> getCourseIdsByStudentId(long studentId){

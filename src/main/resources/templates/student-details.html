@@ -31,7 +31,12 @@
                 <tbody>
                 <tr th:each="course : *{courses}">
                     <td><span th:text="${course.courseName}"> Course </span></td>
-                    <td><a th:href="@{/v1/students/{studentId}/unenroll/{courseId}(courseId=${course.courseId},studentId=${student.studentId})}">Unenroll</a></td>
+                    <td>
+                        <form method="POST"
+                              th:action="@{/v1/students/{studentId}/unenroll/{courseId}(courseId=${course.courseId},studentId=${student.studentId})}">
+                            <button type="submit" style="width: 70px; height: 20px;" name="submit" value="value" class="link-button">Unenroll</button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>

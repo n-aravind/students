@@ -17,8 +17,16 @@
             <tr th:each="student : ${students}">
                 <td th:text="${student.firstName}"></td>
                 <td th:text="${student.lastName}"></td>
-                <td><a th:href="@{/v1/students/{id}(id=${student.studentId})}">More Details</a></td>
-                <td><a th:href="@{/v1/students/{id}/delete(id=${student.studentId})}">Delete</a></td>
+                <td>
+                    <form method="GET" th:action="@{/v1/students/{id}(id=${student.studentId})}">
+                        <button type="submit" name="submit" value="value" class="link-button">More Details</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="POST" th:action="@{/v1/students/{id}/delete(id=${student.studentId})}">
+                        <button type="submit" name="submit" value="value" class="link-button">Delete</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

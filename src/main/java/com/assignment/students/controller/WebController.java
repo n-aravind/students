@@ -41,14 +41,14 @@ public class WebController {
     }
 
 
-    @GetMapping("/v1/courses/{id}/delete")
+    @PostMapping("/v1/courses/{id}/delete")
     public String courseForm(@PathVariable long id,  Model model){
         courseService.deleteCourse(id);
         model.addAttribute("courses", courseService.getAllCourses());
         return "course-registry";
     }
 
-    @GetMapping("/v1/courses/{courseId}/unenroll/{studentId}")
+    @PostMapping("/v1/courses/{courseId}/unenroll/{studentId}")
     public String unEnrollStudentFromCourse(@PathVariable long courseId, @PathVariable long studentId, Model model){
         courseStudentService.unEnrollStudentFromCourse(courseId,studentId);
         getCourseDetails(courseId, model);
@@ -62,13 +62,10 @@ public class WebController {
     }
 
     private void getCourseDetails(@PathVariable long id, Model model) {
-        Course subject = courseService.getCourseById(id);
         List<Student> studentsList = new ArrayList<>();
-        for (Long studentId : courseStudentService.getStudentIdsByCourseId(id)){
-            Student student = studentService.getStudentById(studentId);
-            studentsList.add(student);
-        }
-        model.addAttribute("course",subject);
+        courseStudentService.getStudentsByCourseId(id).
+                forEach(studentsList::add);
+        model.addAttribute("course",courseService.getCourseById(id));
         if(studentsList.size() == 0){
             model.addAttribute("students","no-data");
         }else {
@@ -121,7 +118,7 @@ public class WebController {
         return "student-details";
     }
 
-    @GetMapping("/v1/students/{studentId}/unenroll/{courseId}")
+    @PostMapping("/v1/students/{studentId}/unenroll/{courseId}")
     public String unEnrollCourseFromStudent(@PathVariable long studentId, @PathVariable long courseId, Model model){
         courseStudentService.unEnrollStudentFromCourse(courseId,studentId);
         getStudentDetails(studentId, model);
@@ -151,7 +148,7 @@ public class WebController {
         return "available-courses";
     }
 
-    @GetMapping("/v1/students/{studentId}/delete")
+    @PostMapping("/v1/students/{studentId}/delete")
     public String getStudent(@PathVariable String studentId,  Model model){
         studentService.deleteStudent(studentId);
         model.addAttribute("students",studentService.getAllStudents());

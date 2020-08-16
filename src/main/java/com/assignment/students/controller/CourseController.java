@@ -1,6 +1,7 @@
 package com.assignment.students.controller;
 
 import com.assignment.students.model.Course;
+import com.assignment.students.model.Student;
 import com.assignment.students.service.CourseService;
 import com.assignment.students.service.CourseStudentService;
 import org.springframework.http.MediaType;
@@ -12,8 +13,8 @@ import java.util.List;
 @RestController
 public class CourseController {
 
-    private CourseService courseService;
-    private CourseStudentService courseStudentService;
+    private final CourseService courseService;
+    private final CourseStudentService courseStudentService;
 
     public CourseController(CourseService courseService, CourseStudentService courseStudentService) {
         this.courseService = courseService;
@@ -51,8 +52,8 @@ public class CourseController {
     }
 
     @GetMapping("/v1/courses/studentsenrolled/{id}")
-    public List<Long> getStudentsByCourseId(@PathVariable long id){
-        return courseStudentService.getStudentIdsByCourseId(id);
+    public List<Student> getStudentsByCourseId(@PathVariable long id){
+        return courseStudentService.getStudentsByCourseId(id);
     }
 
 }
