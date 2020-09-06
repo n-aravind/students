@@ -9,19 +9,19 @@
           crossorigin="anonymous">
 </head>
 <body>
-<nav>
-<div class="breadcrumbs">
-    <a href="/">Main Menu</a>
-    <a> / </a>
-    <a href="/v1/courses/all">Course Registry</a>
-    <a> / </a>
-    <a style="float:right" href="/logout">Sign Out</a>
-</div>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/v1/courses/all">Course Registry</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Add New Course</li>
+        <li class="ml-auto"><form method="GET" action="/logout">
+            <button type="submit" class="btn btn-primary btn-sm">Sign Out</button>
+        </form></li>
+    </ol>
 </nav>
 <main>
-<h1>Add New Course</h1>
 <form action="#" th:action="@{/v1/courses}" th:object="${course}" method="post">
-    <table>
+    <table class="table">
         <tr>
             <td>Course Name:</td>
             <td><input type="text" th:field="*{courseName}"/></td>

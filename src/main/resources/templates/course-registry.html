@@ -7,24 +7,25 @@
           crossorigin="anonymous">
 </head>
 <body>
-<nav>
-<div class="breadcrumbs">
-    <a href="/">Main Menu</a>
-    <a> / </a>
-    <a style="float:right" href="/logout">Sign Out</a>
-</div>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Course Registry</li>
+        <li class="ml-auto"><form method="GET" action="/logout">
+            <button type="submit" class="btn btn-primary btn-sm">Sign Out</button>
+        </form></li>
+    </ol>
 </nav>
 <main>
-<h1>Course Registry</h1>
 <div th:switch="${/v1/courses/all}">
     <div th:case="*">
-        <table>
+        <table class="table">
             <thead>
             <tr>
                 <th>Course Name</th>
                 <th>Description</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>

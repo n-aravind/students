@@ -7,17 +7,17 @@
           crossorigin="anonymous">
 </head>
 <body>
-<nav>
-<div class="breadcrumbs">
-    <a href="/">Main Menu</a>
-    <a> / </a>
-    <a href="/v1/courses/all">Course Registry</a>
-    <a> / </a>
-    <a style="float:right" href="/logout">Sign Out</a>
-</div>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/v1/courses/all">Course Registry</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Course Details</li>
+        <li class="ml-auto"><form method="GET" action="/logout">
+            <button type="submit" class="btn btn-primary btn-sm">Sign Out</button>
+        </form></li>
+    </ol>
 </nav>
 <main>
-<h1>Course Details</h1>
 <div th:switch="${/v1/course/{id}}">
     <div th:case="*" th:object="${course}">
         <table>
@@ -39,7 +39,7 @@
         </div>
         <div th:unless="${students=='no-data'}">
             <p><u>Students enrolled in this course</u></p>
-        <table>
+        <table class="table">
             <thead>
             <tr>
                 <th>First Name</th>
