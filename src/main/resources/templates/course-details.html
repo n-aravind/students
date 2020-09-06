@@ -1,6 +1,13 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+</head>
 <body>
+<nav>
 <div class="breadcrumbs">
     <a href="/">Main Menu</a>
     <a> / </a>
@@ -8,6 +15,8 @@
     <a> / </a>
     <a style="float:right" href="/logout">Sign Out</a>
 </div>
+</nav>
+<main>
 <h1>Course Details</h1>
 <div th:switch="${/v1/course/{id}}">
     <div th:case="*" th:object="${course}">
@@ -23,11 +32,13 @@
             </tr>
             </tbody>
         </table>
+        <p></p>
+        <section>
         <div th:if="${students=='no-data'}">
             <h3> No Students Enrolled </h3>
         </div>
         <div th:unless="${students=='no-data'}">
-            <h3><u>Students enrolled in this course</u></h3>
+            <p><u>Students enrolled in this course</u></p>
         <table>
             <thead>
             <tr>
@@ -42,13 +53,15 @@
                 <td>
                     <form method="POST"
                           th:action="@{/v1/courses/{courseId}/unenroll/{studentId}(courseId=${course.courseId},studentId=${student.studentId})}">
-                        <button type="submit" style="width: 70px; height: 20px;" name="submit" value="value" class="link-button">Unenroll</button>
+                        <button type="submit" name="submit" value="value" class="link-button">Unenroll</button>
                     </form>
                 </td>
             </tr>
             </tbody>
         </table>
         </div>
+        </section>
     </div>
 </div>
+</main>
 </body>
